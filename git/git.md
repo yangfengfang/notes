@@ -48,7 +48,7 @@ $ git commit -m “注释”
 $ git push
 ```
 
-
+配置文件位于当前本地工作区中的.git文件夹中，文件名叫做config。
 
 <a href="https://www.jianshu.com/p/3421093d9fbf">GIT的基本使用链接</a>>
 
@@ -84,8 +84,20 @@ git init
 2、添加远端仓库地址
 
 ```bash
-git remote add <自定义仓库名> <远端仓库地址>
+git remote add origin <仓库https://gitee.com/xxx/xxx.git>
+ 
+git push -u origin master
 ```
+
+
+
+查看分支：git branch
+
+创建分支：git branch 分支名
+
+切换分支：git checkout 分支名
+
+
 
 3、拉取远端仓库master分支的项目内容
 
