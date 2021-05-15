@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <input type="text" v-model="sour">
+            <button @click="add">添加</button>
+            <button @del="del">删除</button>
+        </div>
+        <ul>
+            <li :key="index" v-for="(item, index) in list">{{item}}</li>
+        </ul>
+        <div>{{info.title}}</div>
+        <div>版本{{info.version}}</div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                sour: '',
+                list: ['Java', 'PHP', 'MySQL', 'Python'],
+                info: {
+                    title: 'Java编程技术',
+                    version: '二',
+                },
+            },
+            methods: {
+                add: function() {
+                    this.list.push(this.sour);
+                    this.sour = '';
+                },
+                del: function() {
+                    this.list.unshift();
+                }
+            }
+        });
+        Vue.set(vm.list, 1, 'PHP+Go');
+        vm.$set(vm.list, 4, 'Redis');
+        Vue.set(vm.info, 'title', 'PHP面对对象');
+        vm.$set(vm.info, 'version', '三');
+    </script>
+</body>
+
+</html>

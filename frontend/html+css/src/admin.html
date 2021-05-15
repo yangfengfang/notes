@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 61px;
+            background-color: aquamarine;
+            z-index: 999;
+        }
+        
+        .aside-body {
+            position: fixed;
+            top: 61px;
+            left: 0;
+            width: 200px;
+            background-color: #ccc;
+            overflow: hidden;
+        }
+        
+        .aside-body aside {
+            position: absolute;
+            left: 0;
+            background-color: #222d32;
+            width: 200px;
+        }
+        
+        .aside-body .progress {
+            position: absolute;
+            right: 0;
+            width: 4px;
+            background-color: black;
+            border-radius: 2px 2px;
+        }
+        
+        article {
+            width: 100%;
+            height: 5000px;
+            background-color: rgb(83, 31, 150);
+            padding: 61px 10px 0 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div>
+            <header></header>
+        </div>
+        <div class="aside-body">
+            <aside style="height: 2000px; top: 0;">
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>2</li>
+                    <li>2</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>3</li>
+                    <li>3</li>
+                    <li>3</li>
+                    <li>3</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>4</li>
+                    <li>4</li>
+                    <li>4</li>
+                    <li>4</li>
+                    <li>4</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                </ul>
+            </aside>
+            <div class="progress" style="top: 0;"></div>
+        </div>
+        <div>
+            <article>
+                <a href="http://www.cssmoban.com/preview/index.html?url=http://demo.kangjingept.com:8020/cssthemes6/11.25ZF15/index.html&id=13948&tid=20137004880497">11</a>
+            </article>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            let asideheight = screen.availHeight - 61;
+            let asideBodyClass = {
+                height: asideheight + 'px',
+            }
+            let asideBody = document.querySelector('.aside-body');
+            asideBody.style.height = asideBodyClass.height;
+
+            let aside = asideBody.children[0];
+            let progress = asideBody.children[1];
+
+            let asideH = parseInt(aside.style.height)
+
+            var progressH = (asideheight / asideH) * 100;
+            let progressClass = {
+                height: progressH + '%',
+            };
+            progress.style.height = progressClass.height;
+
+            asideBody.addEventListener("mousewheel", function(event) {
+                if (event && event.stopPropagation) {
+                    event.stopPropagation();
+                } else {
+                    window.event.cancelBubble = true;
+                }
+                window.event.cancelBubble = true;
+
+                let deltaY = -(event.deltaY);
+                let ch = parseInt(aside.style.height) - asideheight;
+                let asideTop = parseInt(aside.style.top);
+                let asideT = asideTop + deltaY;
+
+                let progressBefor = (asideheight / (parseInt(aside.style.height) + asideTop)) * 100;
+                let progressTop = (progressBefor - progressH) / 100;
+
+                if (asideT >= 0) {
+                    asideT = 0;
+                    progressTop = 0;
+                } else if (Math.abs(ch) <= Math.abs(asideT)) {
+                    asideT = -ch;
+                    let proH = parseInt(progress.style.height) / 100;
+
+                    progressTop = Math.round(proH * asideheight);
+                    progressTop = Math.round(asideheight - progressTop);
+
+                } else {
+                    progressTop = Math.round(progressTop * asideheight);
+                }
+
+                aside.style.top = asideT + 'px';
+                progress.style.top = progressTop + 'px';
+
+
+            });
+
+
+
+        });
+    </script>
+</body>
+
+</html>

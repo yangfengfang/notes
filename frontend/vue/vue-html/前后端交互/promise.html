@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var p = new Promise(function(resolve, reject) {
+            // 成功时调用 resolve()
+            // 失败时调用 reject()
+        });
+        p.then(function(ret) {
+            // 从resolve得到正常结果
+        }, function(ret) {
+            // 从reject得到错误信息
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slot {
+            font-size: 16px;
+            color: yellow;
+        }
+        
+        header {
+            height: 30px;
+            color: black;
+            background-color: blue;
+        }
+        
+        footer {
+            height: 30px;
+            color: #fff;
+            background-color: aquamarine;
+        }
+        
+        .books {
+            color: gold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div-slot>插槽一</div-slot>
+        <div-slot-name>
+            <template slot="header">具名插槽header</template>
+            <p>默认存放位置</p>
+            <template slot="footer">底部</template>
+        </div-slot-name>
+
+        <books-list :list="list">
+            <template slot-scope="slotProps">
+                <strong v-if="slotProps.info.id == 2" class="books">{{slotProps.info.name}}</strong>
+                <strong v-else>{{slotProps.info.name}}</strong>
+            </template>
+        </books-list>
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /** 1.插槽实现 */
+        Vue.component('div-slot', {
+            data: function() {
+
+            },
+            template: `
+            <div class="chacao">
+                <slot></slot>
+            </div>
+            `,
+        });
+
+        /** 2.具名插槽实现 */
+        Vue.component('div-slot-name', {
+            template: `
+               <div>
+                    <header>
+                        <slot name="header">slot默认</slot>
+                    </header>
+                    <main>
+                        <slot>默认</slot>
+                    </main>
+                    <footer>
+                        <slot name="footer"></slot>
+                    </footer>
+                </div>
+            `,
+        });
+
+        /** 3.作用域插槽实现 
+         * 
+         */
+        Vue.component("books-list", {
+            props: ['list'],
+            template: `
+                <ul>
+                    <li :key="item.id" v-for="item in list">
+                        <slot :info="item">{{item.name}}</slot>
+                    </li>
+                </ul>
+            `,
+        });
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                list: [{
+                    id: 1,
+                    name: 'Java',
+                }, {
+                    id: 2,
+                    name: 'PHP',
+                }, {
+                    id: 3,
+                    name: 'MySQL',
+                }],
+            }
+        });
+    </script>
+</body>
+
+</html>

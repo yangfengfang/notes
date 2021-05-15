@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-block] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-block>
+        <!-- 1.v-block 解决闪烁问题 -->
+        <!-- 
+            1、添加样式[v-block] { display: none}
+            2、在差值表达式的容器添加"v-block"
+            原理：先隐藏，再显示
+         -->
+        {{msg}}
+        <br>
+        <!-- 2.数据绑定 -->
+        <!-- 2.1 v-text 填充纯文本 -->
+        <span v-text="msg_text"></span>
+        <!-- 2.2 v-html 填充HTML片段 -->
+        <div v-html="msg_html"></div>
+        <!-- 2.1 v-pre 填充原始信息 -->
+        <div v-pre>v-pre 填充原始信息:{{msg}}</div>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/jQuery.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                msg: "hello Vue",
+                msg_text: "hello text",
+                msg_html: "hello html",
+            },
+        });
+    </script>
+</body>
+
+</html>

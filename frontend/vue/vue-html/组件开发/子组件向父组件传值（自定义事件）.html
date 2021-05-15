@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-text="pmsg" :style="{fontSize: styleObject.fontSize + 'px'}"></div>
+        <button-enlarge @enlarge-text="enlargeText($event)"></button-enlarge>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component("button-enlarge", {
+            // props: '',
+            data: function() {
+                return {
+                    size: 10,
+                }
+            },
+            template: `<button @click="$emit('enlarge-text', size)">扩大父信息字体</button>`,
+        });
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                pmsg: "父信息",
+                styleObject: {
+                    fontSize: 12,
+                }
+            },
+            methods: {
+                enlargeText: function(size) {
+                    this.styleObject.fontSize += size;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

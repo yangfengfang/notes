@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button v-on:click="handel">销毁事件</button>
+        <test-tom></test-tom>
+        <test-jerrt></test-jerrt>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        /**
+         * 非父子组件数组交互
+         */
+        // 定义事件中心
+        const hub = new Vue();
+
+        // 定义两个兄弟组件
+        Vue.component('test-tom', {
+            data: function() {
+                return {
+                    num: 0,
+                }
+            },
+            template: `
+            <div>
+                <div>TOM:{{num}}</div>
+                <div><button @click="handel">点击</button></div>
+            </div>        
+            `,
+            methods: {
+                handel: function() {
+                    // 触发事件,触发对方的事件
+                    hub.$emit('jerrt-event', 1)
+                }
+            },
+            // 事件监听
+            mounted: function() {
+                hub.$on('tom-event', (val) => {
+                    this.num += val;
+                }); // 添加监听事件，监听自己的事件
+            }
+        });
+        Vue.component('test-jerrt', {
+            data: function() {
+                return {
+                    num: 0,
+                }
+            },
+            template: `
+            <div>
+                <div>JERRT:{{num}}</div>
+                <div><button @click="handel">点击</button></div>
+            </div>        
+            `,
+            methods: {
+                handel: function() {
+                    // 触发对test-tom的监听事件
+                    hub.$emit('tom-event', 1);
+                },
+            },
+            // 监听事件
+            mounted: function() {
+                // 添加事件监听
+                hub.$on('jerrt-event', (val) => {
+                    this.num += val;
+                });
+            }
+        });
+        const app = new Vue({
+            el: "#app",
+            data: {},
+            methods: {
+                handel: function() {
+                    // 销毁事件
+                    hub.$off('tom-event');
+                    hub.$off('jerrt-event');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
